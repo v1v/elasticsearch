@@ -1,0 +1,15 @@
+pipeline {
+  agent { label 'linux' }
+  stages {
+    stage('checkout') {
+      steps {
+        checkout scm
+      }
+    }
+    stage('build') {
+      steps {
+        sh './gradlew :distribution:archives:linux-tar:assemble --parallel'
+      }
+    }
+  }
+}
