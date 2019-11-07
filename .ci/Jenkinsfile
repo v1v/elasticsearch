@@ -1,14 +1,19 @@
 pipeline {
   agent { label 'linux' }
   stages {
-    stage('checkout') {
-      steps {
-        checkout scm
-      }
-    }
     stage('build') {
-      steps {
-        sh './gradlew :distribution:archives:linux-tar:assemble --parallel'
+      parallel {
+        stage('build-windows') {
+          agent { label 'windows' }
+          steps {
+            bat 'SET'
+          }
+        }
+        stage('build-linux') {
+          steps {
+            sh 'echo hi'
+          }
+        }
       }
     }
   }
